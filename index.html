@@ -1,0 +1,1727 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ethiopian AI Content Generator</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script><!-- Multi-Platform Ad Networks --> <!-- Ezoic (Primary - SPA Friendly) -->
+  <script async src="https://www.ezojs.com/ezoic/et.js"></script><!-- Carbon Ads (Creator-Focused) -->
+  <script async src="https://cdn.carbonads.com/carbon.js?serve=CETD623L&amp;placement=yoursitecom" id="_carbonads_js"></script><!-- PropellerAds (Global Fallback) -->
+  <script type="text/javascript" src="https://cdn.propellerads.com/framework.js" async></script><!-- MGID Native Ads -->
+  <script type="text/javascript">window.mgid_var = window.mgid_var || [];</script>
+  <script type="text/javascript" src="//jsc.mgid.com/c/o/code.js"></script><!-- Google AdSense (Fallback) -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Outfit:wght@400;600;700&display=swap');
+
+    * {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .heading-font {
+      font-family: 'Outfit', sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .app-wrapper {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #2d1b69 100%);
+    }
+
+    .gradient-border {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gradient-border::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #fbbf24, #f97316, #ec4899);
+    }
+
+    .shimmer {
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .pulse-soft {
+      animation: pulseSoft 2s ease-in-out infinite;
+    }
+
+    @keyframes pulseSoft {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .slide-in {
+      animation: slideIn 0.5s ease-out;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .glow-text {
+      text-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+    }
+
+    .btn-glow {
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-glow::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      transition: left 0.3s ease;
+    }
+
+    .btn-glow:hover::before {
+      left: 100%;
+    }
+
+    .card-glass {
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .text-highlight {
+      background: linear-gradient(135deg, #fbbf24, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .loader {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(251, 191, 36, 0.2);
+      border-top-color: #fbbf24;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .scroll-smooth {
+      scroll-behavior: smooth;
+    }
+
+    .tab-active {
+      border-bottom: 2px solid #fbbf24;
+      color: #fbbf24;
+    }
+
+    .tab-inactive {
+      border-bottom: 2px solid transparent;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    input, textarea, select {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: #fbbf24;
+      box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
+      outline: none;
+    }
+
+    .toast {
+      animation: slideInUp 0.4s ease-out;
+    }
+
+    @keyframes slideInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .content-card {
+      border-left: 3px solid #fbbf24;
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    .content-card::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .content-card::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .content-card::-webkit-scrollbar-thumb {
+      background: rgba(251, 191, 36, 0.5);
+      border-radius: 3px;
+    }
+
+    .content-card::-webkit-scrollbar-thumb:hover {
+      background: rgba(251, 191, 36, 0.8);
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+ </head>
+ <body>
+  <div class="app-wrapper overflow-auto scroll-smooth">
+   <!-- Auth Modal -->
+   <div id="auth-modal" class="fixed inset-0 bg-black/80 backdrop-blur-lg z-50 flex items-center justify-center p-4">
+    <div class="card-glass rounded-2xl p-8 max-w-md w-full border border-white/20 fade-in">
+     <div class="text-center mb-8">
+      <div class="p-4 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl w-fit mx-auto mb-4">
+       <i data-lucide="sparkles" class="w-8 h-8 text-slate-900"></i>
+      </div>
+      <h2 class="heading-font text-2xl font-800 text-white mb-2">Welcome to EthioAI</h2>
+      <p class="text-white/60 text-sm">Content Generator for African Creators</p>
+     </div><!-- Login Tab -->
+     <div id="login-tab" class="space-y-4">
+      <form id="login-form" class="space-y-4">
+       <div>
+        <label class="block text-sm font-600 text-white/90 mb-2">Email</label> <input type="email" id="login-email" placeholder="your@email.com" class="w-full px-4 py-3 rounded-lg text-white placeholder-white/30 focus:ring-2 focus:ring-amber-400/50 bg-white/5 border border-white/10" required>
+       </div>
+       <div>
+        <label class="block text-sm font-600 text-white/90 mb-2">Password</label> <input type="password" id="login-password" placeholder="••••••••" class="w-full px-4 py-3 rounded-lg text-white placeholder-white/30 focus:ring-2 focus:ring-amber-400/50 bg-white/5 border border-white/10" required>
+       </div><button type="submit" class="btn-glow w-full py-3 px-4 rounded-lg bg-gradient-to-r from-amber-400 to-orange-500 text-slate-900 font-700 hover:shadow-lg hover:shadow-amber-400/50">Sign In</button>
+       <div id="login-error" class="hidden p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+        <p id="login-error-text" class="text-xs text-red-300"></p>
+       </div>
+      </form>
+      <div class="text-center">
+       <p class="text-sm text-white/60">Don't have an account? <button type="button" onclick="switchAuthTab('signup')" class="text-amber-300 hover:text-amber-200 font-semibold">Sign up</button></p>
+      </div>
+     </div><!-- Signup Tab -->
+     <div id="signup-tab" class="hidden space-y-4">
+      <form id="signup-form" class="space-y-4">
+       <div>
+        <label class="block text-sm font-600 text-white/90 mb-2">Full Name</label> <input type="text" id="signup-name" placeholder="Your Name" class="w-full px-4 py-3 rounded-lg text-white placeholder-white/30 focus:ring-2 focus:ring-amber-400/50 bg-white/5 border border-white/10" required>
+       </div>
+       <div>
+        <label class="block text-sm font-600 text-white/90 mb-2">Email</label> <input type="email" id="signup-email" placeholder="your@email.com" class="w-full px-4 py-3 rounded-lg text-white placeholder-white/30 focus:ring-2 focus:ring-amber-400/50 bg-white/5 border border-white/10" required>
+       </div>
+       <div>
+        <label class="block text-sm font-600 text-white/90 mb-2">Password</label> <input type="password" id="signup-password" placeholder="••••••••" class="w-full px-4 py-3 rounded-lg text-white placeholder-white/30 focus:ring-2 focus:ring-amber-400/50 bg-white/5 border border-white/10" required>
+       </div>
+       <div>
+        <label class="block text-sm font-600 text-white/90 mb-2">Country</label> <select id="signup-country" class="w-full px-4 py-3 rounded-lg text-white focus:ring-2 focus:ring-amber-400/50 bg-white/5 border border-white/10"> <option value="Ethiopia">🇪🇹 Ethiopia</option> <option value="Kenya">🇰🇪 Kenya</option> <option value="Nigeria">🇳🇬 Nigeria</option> <option value="South Africa">🇿🇦 South Africa</option> <option value="Ghana">🇬🇭 Ghana</option> <option value="Other">🌍 Other</option> </select>
+       </div><button type="submit" class="btn-glow w-full py-3 px-4 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white font-700 hover:shadow-lg hover:shadow-purple-400/50">Create Account</button>
+       <div id="signup-error" class="hidden p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+        <p id="signup-error-text" class="text-xs text-red-300"></p>
+       </div>
+      </form>
+      <div class="text-center">
+       <p class="text-sm text-white/60">Already have an account? <button type="button" onclick="switchAuthTab('login')" class="text-amber-300 hover:text-amber-200 font-semibold">Sign in</button></p>
+      </div>
+     </div>
+    </div>
+   </div><!-- Header -->
+   <header class="gradient-border sticky top-0 z-50">
+    <div class="bg-gradient-to-r from-slate-900/95 to-indigo-900/95 backdrop-blur-md px-6 py-6 border-b border-white/10">
+     <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+       <div class="p-3 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg">
+        <i data-lucide="sparkles" class="w-6 h-6 text-slate-900"></i>
+       </div>
+       <div>
+        <h1 class="heading-font text-2xl font-800 bg-gradient-to-r from-amber-300 to-orange-400 bg-clip-text text-transparent" id="app-title">Ethiopian AI Content Generator</h1>
+        <p class="text-xs text-amber-100/70">Powered by NIBRAS AHMED 🇪🇹</p>
+       </div>
+      </div>
+      <div class="text-right hidden sm:block">
+       <p class="text-amber-100/80 text-sm font-medium" id="creator-info">saba.koof21@gmail.com</p><button id="user-menu-btn" class="text-amber-100/50 text-xs hover:text-amber-100 mt-2 cursor-pointer flex items-center gap-1 ml-auto"><i data-lucide="user" class="w-4 h-4"></i> <span id="user-display">Account</span></button>
+      </div>
+     </div>
+    </div>
+   </header><!-- Ad Space - Top Banner -->
+   <div class="w-full bg-gradient-to-r from-slate-900/50 to-indigo-900/50 border-b border-white/10 px-4 py-3">
+    <div class="max-w-7xl mx-auto">
+     <!-- Ezoic Primary -->
+     <div id="ezoic-top-banner" class="flex justify-center mb-2">
+      <ins class="ezoic-adunit" data-ad-unit="123"></ins>
+     </div><!-- Fallback: Google AdSense -->
+     <div id="ad-top" class="flex justify-center">
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="1234567890" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+     </div>
+    </div>
+   </div><!-- Main Content -->
+   <main class="flex-1 px-4 py-8 md:px-6">
+    <div class="max-w-7xl mx-auto">
+     <!-- Status Alert -->
+     <div id="status-alert" class="mb-6 fade-in hidden">
+      <div class="card-glass rounded-xl p-4 border-l-4 border-red-500">
+       <div class="flex items-start gap-3">
+        <i data-lucide="alert-circle" class="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5"></i>
+        <div>
+         <p class="text-sm font-semibold text-red-300">Connection Error</p>
+         <p id="status-message" class="text-xs text-red-200 mt-1">Unable to connect to backend. Please check your API URL.</p>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Form Section -->
+      <div class="lg:col-span-1">
+       <div class="card-glass rounded-2xl p-6 gradient-border sticky top-24 fade-in">
+        <!-- PropellerAds Sidebar (High RPM) -->
+        <div id="propeller-sidebar" class="mb-6 min-h-300"></div>
+        <h2 class="heading-font text-lg font-700 text-white mb-6 flex items-center gap-2"><i data-lucide="pen-tool" class="w-5 h-5 text-amber-400"></i> Create Content</h2>
+        <form id="content-form" class="space-y-5">
+         <div class="flex items-center justify-between">
+          <div>
+           <label class="block text-sm font-600 text-amber-100/90 mb-2"> <i data-lucide="lightbulb" class="w-4 h-4 inline mr-1"></i> Topic or Idea </label> <textarea id="topic-input" placeholder="E.g., Ethiopian coffee business, Freelancing tips..." class="w-full px-4 py-3 rounded-lg text-white placeholder-white/30 resize-none focus:ring-2 focus:ring-amber-400/50" rows="3" maxlength="500" required></textarea>
+           <div class="flex items-center justify-between mt-1">
+            <p class="text-xs text-white/40"><span id="char-count">0</span>/500 characters</p>
+            <p id="usage-text" class="text-xs text-amber-300 font-semibold">Free plan: 0/10 used</p>
+           </div>
+          </div>
+         </div><!-- Trending Topics -->
+         <div class="pt-2 border-t border-white/10">
+          <p class="text-xs font-600 text-amber-100/90 mb-2 uppercase tracking-wide">🔥 Trending Topics</p>
+          <div class="flex flex-wrap gap-2">
+           <button type="button" class="trend px-3 py-1 bg-white/10 hover:bg-amber-400/20 text-white/80 hover:text-amber-300 rounded-lg text-xs transition-all">Ethiopian Business</button> <button type="button" class="trend px-3 py-1 bg-white/10 hover:bg-amber-400/20 text-white/80 hover:text-amber-300 rounded-lg text-xs transition-all">Make Money Online</button> <button type="button" class="trend px-3 py-1 bg-white/10 hover:bg-amber-400/20 text-white/80 hover:text-amber-300 rounded-lg text-xs transition-all">TikTok Growth</button>
+          </div>
+         </div><!-- Platform Selection -->
+         <div>
+          <label class="block text-sm font-600 text-amber-100/90 mb-2"> <i data-lucide="share-2" class="w-4 h-4 inline mr-1"></i> Platform </label> <select id="platform-select" class="w-full px-4 py-3 rounded-lg text-white focus:ring-2 focus:ring-amber-400/50"> <option value="instagram">📸 Instagram</option> <option value="tiktok">🎵 TikTok</option> <option value="youtube">▶️ YouTube</option> <option value="twitter">𝕏 Twitter/X</option> <option value="linkedin">💼 LinkedIn</option> <option value="facebook">👥 Facebook</option> </select>
+         </div><!-- Tone Selection -->
+         <div>
+          <label class="block text-sm font-600 text-amber-100/90 mb-2"> <i data-lucide="volume-2" class="w-4 h-4 inline mr-1"></i> Tone </label> <select id="tone-select" class="w-full px-4 py-3 rounded-lg text-white focus:ring-2 focus:ring-amber-400/50"> <option value="professional">Professional</option> <option value="casual">Casual &amp; Fun</option> <option value="inspirational">Inspirational</option> <option value="educational">Educational</option> <option value="humorous">Humorous</option> </select>
+         </div><!-- Audience Size -->
+         <div>
+          <label class="block text-sm font-600 text-amber-100/90 mb-2"> <i data-lucide="users" class="w-4 h-4 inline mr-1"></i> Audience Size </label>
+          <div class="flex gap-2">
+           <input type="number" id="audience-input" placeholder="Followers" value="80000" class="flex-1 px-4 py-3 rounded-lg text-white placeholder-white/30 focus:ring-2 focus:ring-amber-400/50" min="100">
+          </div>
+         </div><!-- Engagement Rate -->
+         <div>
+          <label class="block text-sm font-600 text-amber-100/90 mb-2"> <i data-lucide="trending-up" class="w-4 h-4 inline mr-1"></i> Engagement Rate (%) </label> <input type="number" id="engagement-input" placeholder="Engagement %" value="3" class="w-full px-4 py-3 rounded-lg text-white placeholder-white/30 focus:ring-2 focus:ring-amber-400/50" min="0" max="100" step="0.1">
+         </div><!-- Monetization Options -->
+         <div class="pt-2 border-t border-white/10">
+          <p class="text-xs font-600 text-amber-100/90 mb-3 uppercase tracking-wide">Monetization Options</p>
+          <div class="space-y-3">
+           <label class="flex items-center gap-3 cursor-pointer"> <input type="checkbox" id="monetization-check" class="w-4 h-4 rounded accent-amber-400 cursor-pointer"> <span class="text-sm text-white/80">💰 Include Monetization Strategy</span> </label> <label class="flex items-center gap-3 cursor-pointer"> <input type="checkbox" id="affiliate-check" class="w-4 h-4 rounded accent-amber-400 cursor-pointer"> <span class="text-sm text-white/80">🔗 Include Affiliate Links</span> </label> <label class="flex items-center gap-3 cursor-pointer"> <input type="checkbox" id="sponsor-check" class="w-4 h-4 rounded accent-amber-400 cursor-pointer"> <span class="text-sm text-white/80">📧 Include Sponsor Pitch Email</span> </label>
+          </div>
+         </div><!-- AI Provider Selection -->
+         <div class="pt-2 border-t border-white/10">
+          <label class="block text-sm font-600 text-amber-100/90 mb-2"> <i data-lucide="brain" class="w-4 h-4 inline mr-1"></i> AI Provider </label> <select id="provider-select" class="w-full px-4 py-3 rounded-lg text-white focus:ring-2 focus:ring-amber-400/50"> <option value="claude">🧠 Claude (Best Quality)</option> <option value="gemini">✨ Gemini (Fast)</option> </select>
+         </div><!-- Generate Button --> <button type="submit" id="generate-btn" class="btn-glow w-full py-3 px-6 rounded-lg bg-gradient-to-r from-amber-400 to-orange-500 text-slate-900 font-700 flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-amber-400/50 transition-all duration-300 mt-6"> <i data-lucide="zap" class="w-5 h-5"></i> Generate Content </button> <!-- Error Message -->
+         <div id="form-error" class="hidden p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+          <p id="form-error-text" class="text-xs text-red-300"></p>
+         </div>
+        </form>
+       </div>
+      </div><!-- Marketing Funnel Section -->
+      <div class="lg:col-span-3">
+       <div class="card-glass rounded-2xl p-6 gradient-border mt-6">
+        <h2 class="heading-font text-lg font-700 text-white mb-6 flex items-center gap-2"><i data-lucide="target" class="w-5 h-5 text-purple-400"></i> Marketing Funnel &amp; Lead Capture 🚀</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6"><!-- Stats Card -->
+         <div class="card-glass rounded-xl p-4 border-l-4 border-purple-400">
+          <p class="text-xs text-white/60 font-semibold uppercase">Total Leads Captured</p>
+          <p id="total-leads" class="text-2xl font-800 text-purple-300 mt-2">0</p>
+          <p class="text-xs text-white/40 mt-1">Growing every day 📈</p>
+         </div><!-- Email Sequence Card -->
+         <div class="card-glass rounded-xl p-4 border-l-4 border-cyan-400">
+          <p class="text-xs text-white/60 font-semibold uppercase">Ready to Email</p>
+          <p id="email-ready" class="text-2xl font-800 text-cyan-300 mt-2">0</p>
+          <p class="text-xs text-white/40 mt-1">Use email templates below</p>
+         </div><!-- Conversion Potential Card -->
+         <div class="card-glass rounded-xl p-4 border-l-4 border-green-400">
+          <p class="text-xs text-white/60 font-semibold uppercase">Conversion Potential</p>
+          <p id="conversion-potential" class="text-2xl font-800 text-green-300 mt-2">$0</p>
+          <p class="text-xs text-white/40 mt-1">Est. revenue at 3% conversion</p>
+         </div>
+        </div><!-- Tabs -->
+        <div class="flex border-b border-white/10 mb-6 overflow-x-auto"><button class="tab-active py-3 px-4 font-medium text-sm flex items-center gap-2 whitespace-nowrap" onclick="switchFunnelTab('capture')"> <i data-lucide="inbox" class="w-4 h-4"></i> Lead Capture Form </button> <button class="tab-inactive py-3 px-4 font-medium text-sm flex items-center gap-2 whitespace-nowrap" onclick="switchFunnelTab('templates')"> <i data-lucide="mail" class="w-4 h-4"></i> Email Templates </button> <button class="tab-inactive py-3 px-4 font-medium text-sm flex items-center gap-2 whitespace-nowrap" onclick="switchFunnelTab('leads')"> <i data-lucide="users" class="w-4 h-4"></i> Lead Management </button> <button class="tab-inactive py-3 px-4 font-medium text-sm flex items-center gap-2 whitespace-nowrap" onclick="switchFunnelTab('strategy')"> <i data-lucide="zap" class="w-4 h-4"></i> 90-Day Strategy </button>
+        </div><!-- Tab Content --> <!-- Lead Capture Form Tab -->
+        <div id="tab-capture" class="fade-in">
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-6"><!-- Lead Capture Form -->
+          <div>
+           <h3 class="heading-font text-md font-700 text-white mb-4">Capture Leads</h3>
+           <form id="lead-capture-form" class="space-y-4">
+            <div><label class="block text-sm font-600 text-amber-100/90 mb-2">Full Name</label> <input type="text" id="lead-name" placeholder="E.g., Abebe Kebede" class="w-full px-4 py-2 rounded-lg text-white placeholder-white/30 focus:ring-2 focus:ring-purple-400/50" required>
+            </div>
+            <div><label class="block text-sm font-600 text-amber-100/90 mb-2">Business Email</label> <input type="email" id="lead-email" placeholder="business@example.com" class="w-full px-4 py-2 rounded-lg text-white placeholder-white/30 focus:ring-2 focus:ring-purple-400/50" required>
+            </div>
+            <div><label class="block text-sm font-600 text-amber-100/90 mb-2">WhatsApp / Phone</label> <input type="tel" id="lead-phone" placeholder="+251 9XX XXX XXXX" class="w-full px-4 py-2 rounded-lg text-white placeholder-white/30 focus:ring-2 focus:ring-purple-400/50" required>
+            </div>
+            <div><label class="block text-sm font-600 text-amber-100/90 mb-2">Lead Type</label> <select id="lead-type" class="w-full px-4 py-2 rounded-lg text-white focus:ring-2 focus:ring-purple-400/50"> <option value="influencer">🌟 Influencer (1K+ followers)</option> <option value="sme">🏪 Small Business Owner</option> <option value="agency">🏢 Digital Agency</option> <option value="ecommerce">🛒 E-commerce Business</option> <option value="blogger">✍️ Content Blogger</option> <option value="other">❓ Other</option> </select>
+            </div>
+            <div><label class="block text-sm font-600 text-amber-100/90 mb-2">How Did You Find Us?</label> <select id="lead-source" class="w-full px-4 py-2 rounded-lg text-white focus:ring-2 focus:ring-purple-400/50"> <option value="telegram">📱 Telegram</option> <option value="whatsapp">💬 WhatsApp</option> <option value="instagram">📸 Instagram</option> <option value="linkedin">💼 LinkedIn</option> <option value="tiktok">🎵 TikTok</option> <option value="word-of-mouth">👂 Word of Mouth</option> <option value="other">🔍 Google Search</option> </select>
+            </div><button type="submit" class="btn-glow w-full py-3 px-6 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white font-700 flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-purple-400/50 transition-all duration-300"> <i data-lucide="plus" class="w-5 h-5"></i> Capture Lead </button>
+           </form>
+          </div><!-- Lead Capture Instructions -->
+          <div>
+           <h3 class="heading-font text-md font-700 text-white mb-4">📊 Lead Capture Strategy</h3>
+           <div class="space-y-3 text-sm text-white/80">
+            <div class="card-glass rounded-lg p-3 border-l-4 border-purple-400">
+             <p class="font-semibold text-purple-300 mb-1">🎯 Where to Find Leads:</p>
+             <p class="text-xs">LinkedIn groups, Telegram business channels, Instagram DMs, local business directories</p>
+            </div>
+            <div class="card-glass rounded-lg p-3 border-l-4 border-cyan-400">
+             <p class="font-semibold text-cyan-300 mb-1">💬 Outreach Message:</p>
+             <p class="text-xs">"Hey! 👋 Try our AI content generator. Save 10+ hours/week on social media. Free trial inside → [link]"</p>
+            </div>
+            <div class="card-glass rounded-lg p-3 border-l-4 border-green-400">
+             <p class="font-semibold text-green-300 mb-1">📈 Expected Conversion:</p>
+             <p class="text-xs">3-5% of leads → Pro tier ($99/month) = $15-25/lead lifetime value</p>
+            </div>
+            <div class="card-glass rounded-lg p-3 border-l-4 border-orange-400">
+             <p class="font-semibold text-orange-300 mb-1">✉️ Follow-up Sequence:</p>
+             <p class="text-xs">Day 1: Welcome email, Day 3: Case study, Day 7: Special discount offer</p>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div><!-- Email Templates Tab -->
+        <div id="tab-templates" class="hidden fade-in">
+         <div class="space-y-4"><!-- Cold Outreach Email -->
+          <div class="card-glass rounded-xl p-4">
+           <h4 class="heading-font font-700 text-white mb-2 flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-orange-400"></i> Cold Outreach Email (Day 1)</h4>
+           <div class="bg-white/5 rounded-lg p-4 mb-3 text-xs text-white/80 font-mono">
+            <p><strong>Subject:</strong> Save 10 hours/week on content creation 🚀</p>
+            <p class="mt-3 whitespace-pre-wrap">Hi [NAME], I saw you're active on [PLATFORM] with great content! 👏 We built an AI tool specifically for Ethiopian creators to: ✅ Generate 20+ post ideas in minutes ✅ Create monetization strategies 💰 ✅ Build sponsor pitch emails ✅ All in [LANGUAGE] context Try free: [YOUR_LINK] Use code: FREEWEEK20 for 20% off Best, NIBRAS AHMED +251 953 536 342 Finfinnee, Ethiopia 🇪🇹</p>
+           </div><button class="btn-glow w-full py-2 px-4 bg-white/10 hover:bg-white/20 text-orange-300 rounded-lg font-medium text-sm transition-all duration-300 flex items-center justify-center gap-2" onclick="copyTemplate('cold-outreach')"> <i data-lucide="copy" class="w-4 h-4"></i> Copy Email </button>
+          </div><!-- Case Study Email -->
+          <div class="card-glass rounded-xl p-4">
+           <h4 class="heading-font font-700 text-white mb-2 flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-green-400"></i> Case Study Email (Day 3)</h4>
+           <div class="bg-white/5 rounded-lg p-4 mb-3 text-xs text-white/80 font-mono">
+            <p><strong>Subject:</strong> How [EXAMPLE_CREATOR] increased engagement by 247% 📈</p>
+            <p class="mt-3 whitespace-pre-wrap">Hi [NAME], Quick case study: One of our creators went from: ❌ 2 hours/day on content creation ❌ 2.3% engagement rate ❌ $0 from monetization To: ✅ 20 minutes/day with AI ✅ 5.7% engagement (148% increase!) ✅ $1,200/month from sponsorships How? Our AI generates: → Monetization strategies → Affiliate suggestions → Sponsor pitch emails Ready to try? [YOUR_LINK] Cheers, NIBRAS</p>
+           </div><button class="btn-glow w-full py-2 px-4 bg-white/10 hover:bg-white/20 text-green-300 rounded-lg font-medium text-sm transition-all duration-300 flex items-center justify-center gap-2" onclick="copyTemplate('case-study')"> <i data-lucide="copy" class="w-4 h-4"></i> Copy Email </button>
+          </div><!-- Special Offer Email -->
+          <div class="card-glass rounded-xl p-4">
+           <h4 class="heading-font font-700 text-white mb-2 flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-red-400"></i> Special Offer Email (Day 7)</h4>
+           <div class="bg-white/5 rounded-lg p-4 mb-3 text-xs text-white/80 font-mono">
+            <p><strong>Subject:</strong> 50% off for the next 48 hours ⏰</p>
+            <p class="mt-3 whitespace-pre-wrap">Hi [NAME], This offer expires in 48 hours: Pro Plan: $99/month → $49.50/month (First 3 months, then regular price) What you get: ✅ Unlimited content generation ✅ Monetization strategies ✅ Affiliate program matching ✅ Sponsor pitch emails ✅ Priority email support Use code: ETHIOPIA50 Offer valid until: [DATE/TIME] [YOUR_LINK] Don't miss this, NIBRAS AHMED +251 953 536 342</p>
+           </div><button class="btn-glow w-full py-2 px-4 bg-white/10 hover:bg-white/20 text-red-300 rounded-lg font-medium text-sm transition-all duration-300 flex items-center justify-center gap-2" onclick="copyTemplate('special-offer')"> <i data-lucide="copy" class="w-4 h-4"></i> Copy Email </button>
+          </div>
+         </div>
+        </div><!-- Lead Management Tab -->
+        <div id="tab-leads" class="hidden fade-in">
+         <div class="space-y-4">
+          <div class="flex gap-2 mb-4"><select id="filter-status" class="px-4 py-2 rounded-lg text-white bg-white/5 border border-white/10 focus:ring-2 focus:ring-purple-400/50 text-sm"> <option value="">All Statuses</option> <option value="new">New Leads</option> <option value="emailed">Emailed</option> <option value="interested">Interested</option> <option value="trial">On Trial</option> <option value="customer">Customer</option> </select> <button id="export-leads-btn" class="btn-glow px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg font-medium text-sm transition-all duration-300 flex items-center gap-2"> <i data-lucide="download" class="w-4 h-4"></i> Export CSV </button> <button id="refresh-leads-btn" class="btn-glow px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg font-medium text-sm transition-all duration-300 flex items-center gap-2"> <i data-lucide="refresh-cw" class="w-4 h-4"></i> Refresh </button>
+          </div>
+          <div id="leads-table-container" class="overflow-x-auto">
+           <table class="w-full text-sm text-white/80">
+            <thead class="bg-white/5 border-b border-white/10">
+             <tr>
+              <th class="px-4 py-3 text-left font-semibold">Name</th>
+              <th class="px-4 py-3 text-left font-semibold">Email</th>
+              <th class="px-4 py-3 text-left font-semibold">Type</th>
+              <th class="px-4 py-3 text-left font-semibold">Source</th>
+              <th class="px-4 py-3 text-left font-semibold">Status</th>
+              <th class="px-4 py-3 text-left font-semibold">Date</th>
+              <th class="px-4 py-3 text-center font-semibold">Actions</th>
+             </tr>
+            </thead>
+            <tbody id="leads-tbody" class="divide-y divide-white/10">
+             <tr class="hover:bg-white/5">
+              <td colspan="7" class="px-4 py-8 text-center text-white/40">No leads yet. Start capturing! 👆</td>
+             </tr>
+            </tbody>
+           </table>
+          </div>
+         </div>
+        </div><!-- 90-Day Strategy Tab -->
+        <div id="tab-strategy" class="hidden fade-in">
+         <div class="space-y-4"><!-- Phase 1 -->
+          <div class="card-glass rounded-xl p-4 border-l-4 border-blue-400">
+           <h4 class="heading-font font-700 text-white mb-3 flex items-center gap-2"><i data-lucide="rocket" class="w-4 h-4 text-blue-400"></i> Phase 1: MVP Launch (Days 1-30)</h4>
+           <div class="space-y-2 text-xs text-white/80">
+            <p>✅ <strong>Week 1:</strong> Deploy backend + frontend. Go live with Free + Pro tiers.</p>
+            <p>✅ <strong>Week 2-3:</strong> Cold email outreach to 500+ LinkedIn profiles (10% expected response = 50 leads)</p>
+            <p>✅ <strong>Week 4:</strong> Telegram bot launch. Share in 20+ Ethiopian business groups (free). Target: 100+ leads.</p>
+            <p class="mt-2 text-blue-200"><strong>🎯 Goal:</strong> 100-150 leads, 3-5 paying customers ($300-500/month recurring)</p>
+           </div>
+           <div class="mt-3 text-xs text-white/60">
+            <p><strong>Channels to use:</strong></p>
+            <p>📧 Email outreach (LinkedIn Sales Navigator)</p>
+            <p>📱 Telegram business groups</p>
+            <p>💬 WhatsApp community sharing</p>
+            <p>📸 Instagram DM outreach</p>
+           </div>
+          </div><!-- Phase 2 -->
+          <div class="card-glass rounded-xl p-4 border-l-4 border-purple-400">
+           <h4 class="heading-font font-700 text-white mb-3 flex items-center gap-2"><i data-lucide="zap" class="w-4 h-4 text-purple-400"></i> Phase 2: Growth Features (Days 31-60)</h4>
+           <div class="space-y-2 text-xs text-white/80">
+            <p>✅ <strong>Week 5:</strong> Launch monetization tips + affiliate matching (already in backend!)</p>
+            <p>✅ <strong>Week 6:</strong> Partner with 5+ micro-influencers (50K+ followers) for referral commissions (20%)</p>
+            <p>✅ <strong>Week 7:</strong> Paid ads campaign: $500 budget on Facebook + Instagram targeting Ethiopia</p>
+            <p>✅ <strong>Week 8:</strong> Unlock Business tier ($49/month). Target SMEs &amp; agencies.</p>
+            <p class="mt-2 text-purple-200"><strong>🎯 Goal:</strong> 300+ leads, 15-20 paying customers ($1,500-2,000/month recurring)</p>
+           </div>
+           <div class="mt-3 text-xs text-white/60">
+            <p><strong>Partnership model:</strong> Influencers get 20% commission on every referral = $10-20/customer</p>
+            <p><strong>Ad budget allocation:</strong> 60% Facebook, 30% Instagram, 10% LinkedIn</p>
+           </div>
+          </div><!-- Phase 3 -->
+          <div class="card-glass rounded-xl p-4 border-l-4 border-green-400">
+           <h4 class="heading-font font-700 text-white mb-3 flex items-center gap-2"><i data-lucide="target" class="w-4 h-4 text-green-400"></i> Phase 3: Enterprise Scale (Days 61-90)</h4>
+           <div class="space-y-2 text-xs text-white/80">
+            <p>✅ <strong>Week 9:</strong> Partnerships with 10+ local digital agencies (white-label + 30% commission)</p>
+            <p>✅ <strong>Week 10:</strong> Expand to Kenya, Nigeria. Hire local KOLs for outreach.</p>
+            <p>✅ <strong>Week 11:</strong> Launch Enterprise tier with API access ($500-2,000/month)</p>
+            <p>✅ <strong>Week 12:</strong> Scale to 50+ countries in Africa. Target: $50K MRR</p>
+            <p class="mt-2 text-green-200"><strong>🎯 Goal:</strong> 1,000+ leads, 50+ customers across Africa, $10,000+ MRR</p>
+           </div>
+           <div class="mt-3 text-xs text-white/60">
+            <p><strong>White-label model:</strong> Agencies rebrand tool, we get 30% of their SaaS revenue</p>
+            <p><strong>Regional expansion:</strong> Kenya (30%), Nigeria (25%), South Africa (20%), Ethiopia (25%)</p>
+           </div>
+          </div><!-- Success Metrics -->
+          <div class="card-glass rounded-xl p-4 bg-gradient-to-r from-amber-400/10 to-orange-500/10 border-l-4 border-amber-400">
+           <h4 class="heading-font font-700 text-amber-300 mb-3 flex items-center gap-2"><i data-lucide="bar-chart-2" class="w-4 h-4"></i> Success Metrics to Track</h4>
+           <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+            <div>
+             <p class="text-white/60 mb-1">Lead Quality</p>
+             <p class="text-amber-300 font-bold">% Email Opened</p>
+            </div>
+            <div>
+             <p class="text-white/60 mb-1">Conversion Rate</p>
+             <p class="text-amber-300 font-bold">Leads → Customers</p>
+            </div>
+            <div>
+             <p class="text-white/60 mb-1">CAC (Cost/Lead)</p>
+             <p class="text-amber-300 font-bold">$2-5 per lead</p>
+            </div>
+            <div>
+             <p class="text-white/60 mb-1">LTV (Lifetime Value)</p>
+             <p class="text-amber-300 font-bold">$150-500/customer</p>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Results Section -->
+      <div class="lg:col-span-2">
+       <div id="no-content" class="card-glass rounded-2xl p-12 gradient-border text-center">
+        <div class="mb-4">
+         <i data-lucide="inbox" class="w-16 h-16 text-amber-400/30 mx-auto mb-4"></i>
+        </div>
+        <h3 class="heading-font text-xl font-700 text-white mb-2">No Content Yet</h3>
+        <p class="text-white/60 text-sm max-w-sm mx-auto">Fill in the form on the left and click "Generate Content" to create AI-powered posts for your Ethiopian audience.</p>
+       </div><!-- Results Tabs -->
+       <div id="results-section" class="hidden space-y-6 fade-in">
+        <!-- Content Card -->
+        <div class="card-glass rounded-2xl p-6 gradient-border content-card">
+         <h3 class="heading-font text-lg font-700 text-white mb-4 flex items-center gap-2"><i data-lucide="file-text" class="w-5 h-5 text-amber-400"></i> Generated Content</h3>
+         <div id="content-output" class="text-white/90 leading-relaxed text-sm space-y-3 pr-4"></div><button id="copy-content-btn" class="btn-glow mt-4 w-full py-2 px-4 bg-white/10 hover:bg-white/20 text-amber-300 rounded-lg font-medium text-sm transition-all duration-300 flex items-center justify-center gap-2"> <i data-lucide="copy" class="w-4 h-4"></i> Copy Content </button>
+        </div><!-- Hashtags Card -->
+        <div class="card-glass rounded-2xl p-6 gradient-border">
+         <h3 class="heading-font text-lg font-700 text-white mb-4 flex items-center gap-2"><i data-lucide="tag" class="w-5 h-5 text-amber-400"></i> Hashtags</h3>
+         <div id="hashtags-output" class="flex flex-wrap gap-2"></div><button id="copy-hashtags-btn" class="btn-glow mt-4 w-full py-2 px-4 bg-white/10 hover:bg-white/20 text-amber-300 rounded-lg font-medium text-sm transition-all duration-300 flex items-center justify-center gap-2"> <i data-lucide="copy" class="w-4 h-4"></i> Copy Hashtags </button>
+        </div><!-- Monetization Section -->
+        <div id="monetization-section" class="hidden">
+         <div class="card-glass rounded-2xl p-6 gradient-border content-card">
+          <h3 class="heading-font text-lg font-700 text-white mb-4 flex items-center gap-2"><i data-lucide="dollar-sign" class="w-5 h-5 text-green-400"></i> Monetization Strategy</h3>
+          <div id="monetization-output" class="text-white/90 leading-relaxed text-sm space-y-3 pr-4"></div><button id="copy-monetization-btn" class="btn-glow mt-4 w-full py-2 px-4 bg-white/10 hover:bg-white/20 text-amber-300 rounded-lg font-medium text-sm transition-all duration-300 flex items-center justify-center gap-2"> <i data-lucide="copy" class="w-4 h-4"></i> Copy Strategy </button>
+         </div>
+        </div><!-- Affiliate Section -->
+        <div id="affiliate-section" class="hidden">
+         <div class="card-glass rounded-2xl p-6 gradient-border content-card">
+          <h3 class="heading-font text-lg font-700 text-white mb-4 flex items-center gap-2"><i data-lucide="link" class="w-5 h-5 text-cyan-400"></i> Affiliate Opportunities</h3>
+          <div id="affiliate-output" class="text-white/90 leading-relaxed text-sm space-y-3 pr-4"></div><button id="copy-affiliate-btn" class="btn-glow mt-4 w-full py-2 px-4 bg-white/10 hover:bg-white/20 text-amber-300 rounded-lg font-medium text-sm transition-all duration-300 flex items-center justify-center gap-2"> <i data-lucide="copy" class="w-4 h-4"></i> Copy Opportunities </button>
+         </div>
+        </div><!-- Sponsor Pitch Section -->
+        <div id="pitch-section" class="hidden">
+         <div class="card-glass rounded-2xl p-6 gradient-border content-card">
+          <h3 class="heading-font text-lg font-700 text-white mb-4 flex items-center gap-2"><i data-lucide="mail" class="w-5 h-5 text-purple-400"></i> Sponsor Pitch Email</h3>
+          <div id="pitch-output" class="text-white/90 leading-relaxed text-sm space-y-3 pr-4"></div><button id="copy-pitch-btn" class="btn-glow mt-4 w-full py-2 px-4 bg-white/10 hover:bg-white/20 text-amber-300 rounded-lg font-medium text-sm transition-all duration-300 flex items-center justify-center gap-2"> <i data-lucide="copy" class="w-4 h-4"></i> Copy Email </button>
+         </div>
+        </div><!-- History Section -->
+        <div class="card-glass rounded-2xl p-6 gradient-border">
+         <h3 class="heading-font text-lg font-700 text-white mb-4 flex items-center gap-2"><i data-lucide="history" class="w-5 h-5 text-indigo-400"></i> Generation History</h3>
+         <div id="history-list" class="space-y-2"></div>
+         <div id="no-history" class="text-center text-white/40 text-sm py-4">
+          <p>No generations yet</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </main><!-- Footer -->
+   <footer class="gradient-border mt-12 border-t border-white/10 py-6 px-6">
+    <div class="max-w-7xl mx-auto text-center">
+     <p class="text-white/60 text-sm">Created by <span class="text-amber-300 font-semibold" id="creator-name">NIBRAS AHMED</span> | <span id="creator-email" class="text-white/50">saba.koof21@gmail.com</span> | <span class="text-white/50">+251 953 536 342</span> | <span class="text-white/50">Finfinnee, Ethiopia 🇪🇹</span></p>
+     <p class="text-white/40 text-xs mt-3">© 2024 Ethiopian AI Content Generator. All rights reserved.</p>
+    </div>
+   </footer><!-- Toast Notification -->
+   <div id="toast" class="fixed bottom-6 right-6 hidden toast">
+    <div class="card-glass rounded-lg p-4 border-l-4 border-amber-400 flex items-center gap-3">
+     <i data-lucide="check-circle" class="w-5 h-5 text-green-400"></i> <span id="toast-message" class="text-sm text-white font-medium"></span>
+    </div>
+   </div><!-- Loading Overlay -->
+   <div id="loading-overlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center z-40">
+    <div class="text-center">
+     <div class="loader mx-auto mb-4"></div>
+     <p class="text-white/80 text-sm font-medium">Generating your content...</p>
+     <p class="text-white/40 text-xs mt-2">Powered by AI • NIBRAS AHMED</p>
+    </div>
+   </div>
+  </div><!-- Pricing Modal -->
+  <div id="pricing-modal" class="fixed inset-0 bg-black/80 backdrop-blur-lg z-50 flex items-center justify-center p-4 hidden">
+   <div class="card-glass rounded-2xl p-8 max-w-2xl w-full border border-white/20 fade-in max-h-96 overflow-y-auto">
+    <div class="flex items-center justify-between mb-6">
+     <h2 class="heading-font text-2xl font-800 text-white">Upgrade to Pro 🚀</h2><button onclick="closePricingModal()" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-6 h-6"></i></button>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6"><!-- Free Tier -->
+     <div class="card-glass rounded-xl p-6 border border-white/10">
+      <h3 class="heading-font text-lg font-700 text-white mb-4">Free Tier</h3>
+      <p class="text-3xl font-800 text-amber-300 mb-4">$0<span class="text-sm text-white/60">/month</span></p>
+      <ul class="space-y-2 text-sm text-white/80 mb-6">
+       <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400"></i> 10 posts/month</li>
+       <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400"></i> Basic content</li>
+       <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400"></i> Hashtags only</li>
+       <li class="flex items-center gap-2"><i data-lucide="x" class="w-4 h-4 text-red-400"></i> No monetization</li>
+       <li class="flex items-center gap-2"><i data-lucide="x" class="w-4 h-4 text-red-400"></i> No affiliate links</li>
+      </ul><button onclick="closePricingModal()" class="w-full py-2 px-4 bg-white/10 text-white rounded-lg font-medium text-sm">Current Plan</button>
+     </div><!-- Pro Tier -->
+     <div class="card-glass rounded-xl p-6 border-2 border-amber-400/50 bg-gradient-to-br from-amber-400/10 to-orange-500/10">
+      <div class="absolute -top-3 -left-3 px-3 py-1 bg-gradient-to-r from-amber-400 to-orange-500 text-slate-900 font-bold text-xs rounded-full">
+       MOST POPULAR
+      </div>
+      <h3 class="heading-font text-lg font-700 text-white mb-4 pt-2">Pro</h3>
+      <p class="text-3xl font-800 text-amber-300 mb-4">$<span id="pro-price-display">9.99</span><span class="text-sm text-white/60">/month</span></p>
+      <ul class="space-y-2 text-sm text-white/80 mb-6">
+       <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400"></i> Unlimited posts</li>
+       <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400"></i> All tones &amp; platforms</li>
+       <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400"></i> Monetization strategies 💰</li>
+       <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400"></i> Affiliate links 🔗</li>
+       <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400"></i> Sponsor pitch emails 📧</li>
+       <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-400"></i> Priority support</li>
+      </ul><button id="stripe-checkout-btn" class="btn-glow w-full py-3 px-4 bg-gradient-to-r from-amber-400 to-orange-500 text-slate-900 rounded-lg font-bold text-sm flex items-center justify-center gap-2"> <i data-lucide="credit-card" class="w-4 h-4"></i> Subscribe with Stripe </button>
+     </div>
+    </div>
+    <div class="text-xs text-white/50 text-center">
+     <p>✅ Cancel anytime • 🔒 Secure payment • 📧 Instant activation</p>
+    </div>
+   </div>
+  </div><!-- Payment Success Modal -->
+  <div id="payment-success-modal" class="fixed inset-0 bg-black/80 backdrop-blur-lg z-50 flex items-center justify-center p-4 hidden">
+   <div class="card-glass rounded-2xl p-8 max-w-md w-full border border-white/20 fade-in text-center">
+    <div class="p-4 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl w-fit mx-auto mb-4">
+     <i data-lucide="check-circle" class="w-8 h-8 text-white"></i>
+    </div>
+    <h2 class="heading-font text-2xl font-800 text-white mb-2">Payment Successful! 🎉</h2>
+    <p class="text-white/70 text-sm mb-6">Your Pro subscription is now active. Enjoy unlimited content generation!</p><button onclick="closePaymentSuccessModal()" class="btn-glow w-full py-3 px-4 bg-gradient-to-r from-amber-400 to-orange-500 text-slate-900 font-700 rounded-lg">Start Creating</button>
+   </div>
+  </div><!-- Subscription Dashboard Modal -->
+  <div id="subscription-dashboard-modal" class="fixed inset-0 bg-black/80 backdrop-blur-lg z-50 flex items-center justify-center p-4 hidden">
+   <div class="card-glass rounded-2xl p-8 max-w-2xl w-full border border-white/20 fade-in max-h-96 overflow-y-auto">
+    <div class="flex items-center justify-between mb-6">
+     <h2 class="heading-font text-2xl font-800 text-white">My Subscription</h2><button onclick="closeSubscriptionDashboard()" class="text-white/60 hover:text-white"><i data-lucide="x" class="w-6 h-6"></i></button>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6"><!-- Status Card -->
+     <div class="card-glass rounded-xl p-4 border-l-4 border-green-400">
+      <p class="text-xs text-white/60 font-semibold uppercase">Current Plan</p>
+      <p id="subscription-plan-display" class="text-2xl font-800 text-green-300 mt-2">Free</p>
+      <p class="text-xs text-white/40 mt-1">Upgrade anytime</p>
+     </div><!-- Usage Card -->
+     <div class="card-glass rounded-xl p-4 border-l-4 border-blue-400">
+      <p class="text-xs text-white/60 font-semibold uppercase">Usage This Month</p>
+      <p id="subscription-usage-display" class="text-2xl font-800 text-blue-300 mt-2">0/10</p>
+      <p class="text-xs text-white/40 mt-1">Posts generated</p>
+     </div><!-- Next Billing Card -->
+     <div class="card-glass rounded-xl p-4 border-l-4 border-purple-400">
+      <p class="text-xs text-white/60 font-semibold uppercase">Next Billing</p>
+      <p id="subscription-billing-display" class="text-sm font-800 text-purple-300 mt-2">N/A</p>
+      <p class="text-xs text-white/40 mt-1">Never</p>
+     </div>
+    </div>
+    <div id="subscription-payment-methods" class="mb-6">
+     <h3 class="heading-font font-700 text-white mb-4">Payment Methods</h3>
+     <div id="payment-methods-list" class="space-y-3">
+      <p class="text-sm text-white/60">No payment methods on file</p>
+     </div>
+    </div>
+    <div class="space-y-3"><button id="manage-subscription-btn" class="btn-glow w-full py-2 px-4 bg-white/10 hover:bg-white/20 text-white rounded-lg font-medium text-sm transition-all duration-300 flex items-center justify-center gap-2 hidden"> <i data-lucide="settings" class="w-4 h-4"></i> Manage Subscription </button> <button id="cancel-subscription-btn" class="btn-glow w-full py-2 px-4 bg-red-500/10 hover:bg-red-500/20 text-red-300 rounded-lg font-medium text-sm transition-all duration-300 flex items-center justify-center gap-2 hidden"> <i data-lucide="trash-2" class="w-4 h-4"></i> Cancel Subscription </button>
+    </div>
+   </div>
+  </div>
+  <script>
+    // Initialize Element SDK
+    const defaultConfig = {
+      app_title: 'Ethiopian AI Content Generator',
+      backend_url: 'http://localhost:3000',
+      creator_name: 'NIBRAS AHMED',
+      creator_email: 'saba.koof21@gmail.com',
+      free_limit: '10',
+      pro_price: '9.99'
+    };
+
+    let config = { ...defaultConfig };
+    let dataList = [];
+    let currentBackendUrl = defaultConfig.backend_url;
+    let currentUser = null;
+    let usageCount = 0;
+    let isProUser = false;
+
+    // Stripe instance
+    let stripe = null;
+    let elements = null;
+
+    // Element SDK initialization
+    window.elementSdk.init({
+      defaultConfig,
+      onConfigChange: async (newConfig) => {
+        config = newConfig;
+        currentBackendUrl = config.backend_url || defaultConfig.backend_url;
+        document.getElementById('app-title').textContent = config.app_title || defaultConfig.app_title;
+        document.getElementById('creator-name').textContent = config.creator_name || defaultConfig.creator_name;
+        document.getElementById('creator-email').textContent = config.creator_email || defaultConfig.creator_email;
+        document.getElementById('creator-info').textContent = config.creator_email || defaultConfig.creator_email;
+        document.getElementById('pro-price-display').textContent = config.pro_price || defaultConfig.pro_price;
+        
+        // Initialize Stripe if public key is provided
+        if (config.stripe_public_key && config.stripe_public_key !== defaultConfig.stripe_public_key) {
+          initializeStripe(config.stripe_public_key);
+        }
+      },
+      mapToCapabilities: () => ({
+        recolorables: [],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      }),
+      mapToEditPanelValues: (config) => new Map([
+        ['app_title', config.app_title || defaultConfig.app_title],
+        ['backend_url', config.backend_url || defaultConfig.backend_url],
+        ['creator_name', config.creator_name || defaultConfig.creator_name],
+        ['creator_email', config.creator_email || defaultConfig.creator_email],
+        ['free_limit', config.free_limit || defaultConfig.free_limit],
+        ['pro_price', config.pro_price || defaultConfig.pro_price],
+        ['stripe_public_key', config.stripe_public_key || ''],
+        ['stripe_webhook_secret', config.stripe_webhook_secret || '']
+      ])
+    });
+
+    // Initialize Stripe
+    function initializeStripe(publicKey) {
+      if (publicKey && publicKey.startsWith('pk_')) {
+        stripe = Stripe(publicKey);
+        console.log('✅ Stripe initialized successfully');
+      } else {
+        console.warn('⚠️ Invalid Stripe public key. Add your key in Edit Panel.');
+      }
+    }
+
+    // ========== AUTH FUNCTIONS ==========
+
+    function switchAuthTab(tab) {
+      document.getElementById('login-tab').classList.toggle('hidden', tab !== 'login');
+      document.getElementById('signup-tab').classList.toggle('hidden', tab !== 'signup');
+      document.getElementById('login-error').classList.add('hidden');
+      document.getElementById('signup-error').classList.add('hidden');
+    }
+
+    // Login form
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+
+      try {
+        // Simulate auth (in real app, call backend)
+        currentUser = { email, plan: 'free', createdAt: new Date().toISOString() };
+        isProUser = false;
+        usageCount = 0;
+
+        // Save to localStorage
+        localStorage.setItem('auth_token', btoa(email + ':' + password));
+        localStorage.setItem('user_data', JSON.stringify(currentUser));
+
+        // Hide auth modal
+        document.getElementById('auth-modal').classList.add('hidden');
+        updateUIAfterLogin();
+        showToast(`Welcome back, ${email.split('@')[0]}! 🎉`);
+      } catch (error) {
+        document.getElementById('login-error-text').textContent = 'Login failed. Try again.';
+        document.getElementById('login-error').classList.remove('hidden');
+      }
+    });
+
+    // Signup form
+    document.getElementById('signup-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('signup-name').value;
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
+      const country = document.getElementById('signup-country').value;
+
+      try {
+        // Simulate auth
+        currentUser = { name, email, country, plan: 'free', createdAt: new Date().toISOString() };
+        isProUser = false;
+        usageCount = 0;
+
+        // Save to localStorage
+        localStorage.setItem('auth_token', btoa(email + ':' + password));
+        localStorage.setItem('user_data', JSON.stringify(currentUser));
+
+        // Hide auth modal
+        document.getElementById('auth-modal').classList.add('hidden');
+        updateUIAfterLogin();
+        showToast(`Welcome ${name}! 🚀 You have 10 free posts.`);
+      } catch (error) {
+        document.getElementById('signup-error-text').textContent = 'Signup failed. Try again.';
+        document.getElementById('signup-error').classList.remove('hidden');
+      }
+    });
+
+    // Logout
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('user_data');
+      currentUser = null;
+      isProUser = false;
+      usageCount = 0;
+      document.getElementById('auth-modal').classList.remove('hidden');
+      showToast('Logged out successfully');
+    });
+
+    // User menu button
+    document.getElementById('user-menu-btn').addEventListener('click', () => {
+      if (currentUser) {
+        openSubscriptionDashboard();
+      }
+    });
+
+    // Update UI after login
+    function updateUIAfterLogin() {
+      document.getElementById('creator-name').textContent = currentUser.name || currentUser.email.split('@')[0];
+      document.getElementById('creator-email').textContent = currentUser.email;
+      document.getElementById('user-display').textContent = (currentUser.name || currentUser.email.split('@')[0]) + (isProUser ? ' (Pro)' : '');
+      updateUsageUI();
+    }
+
+    // Update usage UI
+    function updateUsageUI() {
+      const freeLimit = parseInt(config.free_limit || '10');
+      if (isProUser) {
+        document.getElementById('usage-text').textContent = '🔥 Pro User - Unlimited access';
+        document.getElementById('generate-btn').classList.remove('hidden');
+        document.getElementById('upgrade-btn').classList.add('hidden');
+      } else {
+        document.getElementById('usage-text').textContent = `Free plan: ${usageCount}/${freeLimit} used`;
+        document.getElementById('generate-btn').classList.remove('hidden');
+        if (usageCount >= freeLimit) {
+          document.getElementById('upgrade-btn').classList.remove('hidden');
+        }
+      }
+    }
+
+    // Check auth on load
+    window.addEventListener('load', () => {
+      const token = localStorage.getItem('auth_token');
+      const userData = localStorage.getItem('user_data');
+
+      if (token && userData) {
+        currentUser = JSON.parse(userData);
+        usageCount = parseInt(localStorage.getItem('usage_count') || '0');
+        isProUser = localStorage.getItem('is_pro_user') === 'true';
+        document.getElementById('auth-modal').classList.add('hidden');
+        updateUIAfterLogin();
+        
+        // Initialize Stripe if available
+        if (config.stripe_public_key && config.stripe_public_key !== defaultConfig.stripe_public_key) {
+          initializeStripe(config.stripe_public_key);
+        }
+      }
+    });
+
+    // Data SDK initialization
+    const dataHandler = {
+      onDataChanged(data) {
+        dataList = data || [];
+        renderHistory();
+      }
+    };
+
+    // Initialize Data SDK
+    async function initDataSDK() {
+      const result = await window.dataSdk.init(dataHandler);
+      if (!result.isOk) {
+        console.error('Failed to initialize Data SDK');
+      }
+    }
+
+    initDataSDK();
+
+    // DOM Elements
+    const form = document.getElementById('content-form');
+    const topicInput = document.getElementById('topic-input');
+    const platformSelect = document.getElementById('platform-select');
+    const toneSelect = document.getElementById('tone-select');
+    const audienceInput = document.getElementById('audience-input');
+    const engagementInput = document.getElementById('engagement-input');
+    const monetizationCheck = document.getElementById('monetization-check');
+    const affiliateCheck = document.getElementById('affiliate-check');
+    const sponsorCheck = document.getElementById('sponsor-check');
+    const providerSelect = document.getElementById('provider-select');
+    const generateBtn = document.getElementById('generate-btn');
+    const loadingOverlay = document.getElementById('loading-overlay');
+    const statusAlert = document.getElementById('status-alert');
+    const statusMessage = document.getElementById('status-message');
+    const formError = document.getElementById('form-error');
+    const formErrorText = document.getElementById('form-error-text');
+    const noContent = document.getElementById('no-content');
+    const resultsSection = document.getElementById('results-section');
+    const contentOutput = document.getElementById('content-output');
+    const hashtagsOutput = document.getElementById('hashtags-output');
+    const monetizationOutput = document.getElementById('monetization-output');
+    const affiliateOutput = document.getElementById('affiliate-output');
+    const pitchOutput = document.getElementById('pitch-output');
+    const monetizationSection = document.getElementById('monetization-section');
+    const affiliateSection = document.getElementById('affiliate-section');
+    const pitchSection = document.getElementById('pitch-section');
+    const historyList = document.getElementById('history-list');
+    const noHistory = document.getElementById('no-history');
+    const charCount = document.getElementById('char-count');
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toast-message');
+
+    // Character counter
+    topicInput.addEventListener('input', () => {
+      charCount.textContent = topicInput.value.length;
+    });
+
+    // Form submission
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // 🚫 AUTH CHECK
+      if (!currentUser) {
+        showFormError('Please login first');
+        document.getElementById('auth-modal').classList.remove('hidden');
+        return;
+      }
+
+      // 🚫 FREE LIMIT CHECK
+      const freeLimit = parseInt(config.free_limit || '10');
+      if (!isProUser && usageCount >= freeLimit) {
+        showFormError(`Free limit reached (${freeLimit} posts). Upgrade to Pro 🚀`);
+        document.getElementById('upgrade-btn').classList.remove('hidden');
+        return;
+      }
+      
+      // Validate input
+      if (!topicInput.value.trim()) {
+        showFormError('Please enter a topic');
+        return;
+      }
+
+      // Clear previous errors
+      formError.classList.add('hidden');
+
+      // Prepare data
+      const payload = {
+        topic: topicInput.value.trim(),
+        platform: platformSelect.value,
+        tone: toneSelect.value,
+        audienceSize: audienceInput.value || '80000',
+        engagementRate: engagementInput.value || '3',
+        includeMonetization: monetizationCheck.checked,
+        includeAffiliate: affiliateCheck.checked,
+        includeSponsorPitch: sponsorCheck.checked,
+        provider: providerSelect.value
+      };
+
+      try {
+        // Show loading
+        loadingOverlay.classList.remove('hidden');
+        generateBtn.disabled = true;
+        statusAlert.classList.add('hidden');
+
+        // Call backend
+        const response = await fetch(`${currentBackendUrl}/api/generate-content`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          throw new Error(`Server error: ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        if (!result.success) {
+          throw new Error(result.error || 'Generation failed');
+        }
+
+        // Display results
+        displayResults(result.data, payload);
+
+        // 🚀 INCREASE USAGE
+        usageCount++;
+        localStorage.setItem('usage_count', usageCount);
+        updateUsageUI();
+
+        // Save to Data SDK
+        const record = {
+          id: Date.now().toString(),
+          topic: payload.topic,
+          platform: payload.platform,
+          tone: payload.tone,
+          content: result.data.content.substring(0, 200),
+          hashtags: result.data.hashtags.slice(0, 5).join(' '),
+          generatedAt: new Date().toISOString()
+        };
+
+        const createResult = await window.dataSdk.create(record);
+        if (createResult.isOk) {
+          showToast('Content saved to history!');
+        }
+
+      } catch (error) {
+        console.error('Error:', error);
+        
+        if (error.message.includes('fetch') || error.message.includes('Failed to')) {
+          statusAlert.classList.remove('hidden');
+          statusMessage.textContent = `Cannot connect to backend at ${currentBackendUrl}. Check your API URL in settings.`;
+        } else {
+          showFormError(error.message || 'An error occurred');
+        }
+      } finally {
+        loadingOverlay.classList.add('hidden');
+        generateBtn.disabled = false;
+      }
+    });
+
+    // Display results
+    function displayResults(data, payload) {
+      noContent.classList.add('hidden');
+      resultsSection.classList.remove('hidden');
+
+      // Content
+      contentOutput.innerHTML = '';
+      if (data.content) {
+        const paragraphs = data.content.split('\n').filter(p => p.trim());
+        paragraphs.forEach(para => {
+          const p = document.createElement('p');
+          p.textContent = para;
+          contentOutput.appendChild(p);
+        });
+      }
+
+      // Hashtags
+      hashtagsOutput.innerHTML = '';
+      if (data.hashtags && data.hashtags.length > 0) {
+        data.hashtags.forEach(tag => {
+          const span = document.createElement('span');
+          span.className = 'px-3 py-1 bg-amber-400/20 text-amber-300 rounded-full text-xs font-medium cursor-pointer hover:bg-amber-400/30 transition-colors';
+          span.textContent = tag;
+          span.addEventListener('click', () => copyToClipboard(tag));
+          hashtagsOutput.appendChild(span);
+        });
+      }
+
+      // Monetization
+      monetizationSection.classList.toggle('hidden', !payload.includeMonetization || !data.monetizationTip);
+      if (data.monetizationTip) {
+        monetizationOutput.innerHTML = '';
+        const tips = data.monetizationTip.split('\n').filter(t => t.trim());
+        tips.forEach(tip => {
+          const p = document.createElement('p');
+          p.textContent = tip;
+          monetizationOutput.appendChild(p);
+        });
+      }
+
+      // Affiliate
+      affiliateSection.classList.toggle('hidden', !payload.includeAffiliate || !data.affiliateLinks);
+      if (data.affiliateLinks) {
+        affiliateOutput.innerHTML = '';
+        const links = data.affiliateLinks.split('\n').filter(l => l.trim());
+        links.forEach(link => {
+          const p = document.createElement('p');
+          p.textContent = link;
+          affiliateOutput.appendChild(p);
+        });
+      }
+
+      // Sponsor Pitch
+      pitchSection.classList.toggle('hidden', !payload.includeSponsorPitch || !data.sponsorPitch);
+      if (data.sponsorPitch) {
+        pitchOutput.innerHTML = '';
+        const lines = data.sponsorPitch.split('\n').filter(l => l.trim());
+        lines.forEach(line => {
+          const p = document.createElement('p');
+          p.textContent = line;
+          pitchOutput.appendChild(p);
+        });
+      }
+
+      // Re-push AdSense ads after results load
+      if (window.adsbygoogle) {
+        window.adsbygoogle.push({});
+      }
+    }
+
+    // Copy buttons
+    document.getElementById('copy-content-btn')?.addEventListener('click', () => {
+      const text = contentOutput.innerText;
+      copyToClipboard(text);
+    });
+
+    // Copy all
+    document.getElementById('copy-all-btn')?.addEventListener('click', () => {
+      const all = contentOutput.innerText + "\n\n" +
+        Array.from(hashtagsOutput.querySelectorAll('span')).map(el => el.textContent).join(' ');
+      copyToClipboard(all);
+      showToast('All content copied! 📋');
+    });
+
+    // Share
+    document.getElementById('share-btn')?.addEventListener('click', () => {
+      const text = contentOutput.innerText;
+      if (navigator.share) {
+        navigator.share({ text });
+      } else {
+        copyToClipboard(text);
+        showToast('Copied - share from your clipboard! 📤');
+      }
+    });
+
+    // Upgrade button
+    document.getElementById('upgrade-btn')?.addEventListener('click', () => {
+      openPricingModal();
+    });
+
+    // Trending topics
+    document.querySelectorAll('.trend').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        topicInput.value = btn.textContent;
+        topicInput.focus();
+      });
+    });
+
+    document.getElementById('copy-hashtags-btn').addEventListener('click', () => {
+      const text = Array.from(hashtagsOutput.querySelectorAll('span')).map(el => el.textContent).join(' ');
+      copyToClipboard(text);
+    });
+
+    document.getElementById('copy-monetization-btn').addEventListener('click', () => {
+      const text = monetizationOutput.innerText;
+      copyToClipboard(text);
+    });
+
+    document.getElementById('copy-affiliate-btn').addEventListener('click', () => {
+      const text = affiliateOutput.innerText;
+      copyToClipboard(text);
+    });
+
+    document.getElementById('copy-pitch-btn').addEventListener('click', () => {
+      const text = pitchOutput.innerText;
+      copyToClipboard(text);
+    });
+
+    // Utility functions
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Copied to clipboard! ✅');
+      }).catch(err => {
+        console.error('Copy failed:', err);
+      });
+    }
+
+    function showToast(message) {
+      toastMessage.textContent = message;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3000);
+    }
+
+    function showFormError(message) {
+      formErrorText.textContent = message;
+      formError.classList.remove('hidden');
+      setTimeout(() => {
+        formError.classList.add('hidden');
+      }, 5000);
+    }
+
+    function renderHistory() {
+      if (dataList.length === 0) {
+        historyList.innerHTML = '';
+        noHistory.classList.remove('hidden');
+      } else {
+        noHistory.classList.add('hidden');
+        historyList.innerHTML = dataList.slice().reverse().slice(0, 5).map((item, index) => `
+          <div class="p-3 bg-white/5 rounded-lg hover:bg-white/10 cursor-pointer transition-all duration-300 border border-white/10">
+            <div class="flex items-start gap-2">
+              <i data-lucide="calendar" class="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5"></i>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-amber-100 truncate">${item.topic}</p>
+                <p class="text-xs text-white/50 mt-1">${item.platform} • ${new Date(item.generatedAt).toLocaleDateString()}</p>
+              </div>
+            </div>
+          </div>
+        `).join('');
+        lucide.createIcons();
+      }
+    }
+
+    // Initialize Lucide icons
+    setTimeout(() => lucide.createIcons(), 0);
+
+    // ========== GOOGLE ADSENSE ==========
+    // Push ads when content is loaded
+    if (window.adsbygoogle) {
+      window.adsbygoogle = window.adsbygoogle || [];
+      window.adsbygoogle.push({});
+    }
+
+    // Re-push ads after results are displayed
+
+    // ========== AD NETWORK INITIALIZATION ==========
+    
+    // Ezoic initialization (SPA-friendly)
+    window.ezoic_settings = {
+      enabled_on_admin: false,
+      enable_refresh_on_dynamic_page_content: true,
+      auto_refresh_rates: {
+        rate_1: { rate: 0 },
+        rate_2: { rate: 0 }
+      }
+    };
+
+    if (window.ezoic) {
+      window.ezoic.cmd = window.ezoic.cmd || [];
+      window.ezoic.cmd.push(function() {
+        ezoic.display.defineAdUnit({
+          id: 123,
+          type: 'display',
+          placement: 'top_banner'
+        });
+      });
+    }
+
+    // PropellerAds initialization (if included)
+    if (window._pa) {
+      window._pa = window._pa || {};
+      window._pa.tagId = "YOUR_PROPELLERADS_ZONE_ID";
+    }
+
+    // MGID Native ads (if included)
+    if (window.mgid_var) {
+      window.mgid_var.push({
+        id: "YOUR_MGID_PLACEMENT_ID",
+        container: "mgid-native-container"
+      });
+    }
+
+    // ========== AD REFRESH ON CONTENT GENERATION ==========
+    
+    // Override the displayResults function to refresh ads
+    const originalDisplayResults = displayResults;
+    window.displayResults = function(data, payload) {
+      originalDisplayResults(data, payload);
+      
+      // Refresh ad networks after results display
+      setTimeout(() => {
+        // Refresh AdSense
+        if (window.adsbygoogle) {
+          window.adsbygoogle.push({});
+        }
+        
+        // Refresh Ezoic
+        if (window.ezoic && window.ezoic.cmd) {
+          window.ezoic.cmd.push(function() {
+            ezoic.display.render();
+          });
+        }
+        
+        // Refresh PropellerAds
+        if (window.setAdZone) {
+          window.setAdZone('YOUR_PROPELLERADS_ZONE_ID');
+        }
+      }, 500);
+    };
+
+    // ========== AD MONITORING & ANALYTICS ==========
+    
+    // Track ad impressions
+    function trackAdImpression(networkName) {
+      if (window.gtag) {
+        gtag('event', 'ad_impression', {
+          'ad_network': networkName,
+          'timestamp': new Date().toISOString()
+        });
+      }
+      console.log(`Ad impression tracked: ${networkName}`);
+    }
+
+    // Track ad clicks
+    function trackAdClick(networkName) {
+      if (window.gtag) {
+        gtag('event', 'ad_click', {
+          'ad_network': networkName,
+          'timestamp': new Date().toISOString()
+        });
+      }
+      console.log(`Ad click tracked: ${networkName}`);
+    }
+
+    // ==========================================
+    // MARKETING FUNNEL FUNCTIONS
+    // ==========================================
+
+    // Switch between funnel tabs
+    function switchFunnelTab(tabName) {
+      // Hide all tabs
+      document.getElementById('tab-capture').classList.add('hidden');
+      document.getElementById('tab-templates').classList.add('hidden');
+      document.getElementById('tab-leads').classList.add('hidden');
+      document.getElementById('tab-strategy').classList.add('hidden');
+
+      // Show selected tab
+      document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+
+      // Update tab buttons
+      document.querySelectorAll('[onclick*="switchFunnelTab"]').forEach(btn => {
+        btn.classList.remove('tab-active');
+        btn.classList.add('tab-inactive');
+      });
+      event.target.closest('button').classList.remove('tab-inactive');
+      event.target.closest('button').classList.add('tab-active');
+
+      lucide.createIcons();
+    }
+
+    // Lead capture form
+    document.getElementById('lead-capture-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const leadName = document.getElementById('lead-name').value.trim();
+      const leadEmail = document.getElementById('lead-email').value.trim();
+      const leadPhone = document.getElementById('lead-phone').value.trim();
+      const leadType = document.getElementById('lead-type').value;
+      const leadSource = document.getElementById('lead-source').value;
+
+      if (!leadName || !leadEmail || !leadPhone) {
+        showToast('Please fill in all fields ⚠️');
+        return;
+      }
+
+      try {
+        // Save lead to Data SDK
+        const leadRecord = {
+          id: Date.now().toString(),
+          lead_name: leadName,
+          lead_email: leadEmail,
+          lead_phone: leadPhone,
+          lead_type: leadType,
+          lead_source: leadSource,
+          lead_status: 'new',
+          createdAt: new Date().toISOString()
+        };
+
+        const result = await window.dataSdk.create(leadRecord);
+        if (result.isOk) {
+          showToast('✅ Lead captured! Check Lead Management tab.');
+          document.getElementById('lead-capture-form').reset();
+          updateLeadStats();
+        } else {
+          showToast('❌ Failed to save lead');
+        }
+      } catch (error) {
+        console.error('Error capturing lead:', error);
+        showToast('Error saving lead');
+      }
+    });
+
+    // Copy email templates
+    function copyTemplate(templateType) {
+      let text = '';
+      if (templateType === 'cold-outreach') {
+        text = `Subject: Save 10 hours/week on content creation 🚀
+
+Hi [NAME],
+
+I saw you're active on [PLATFORM] with great content! 👏
+
+We built an AI tool specifically for Ethiopian creators to:
+✅ Generate 20+ post ideas in minutes
+✅ Create monetization strategies 💰
+✅ Build sponsor pitch emails
+✅ All in [LANGUAGE] context
+
+Try free: [YOUR_LINK]
+Use code: FREEWEEK20 for 20% off
+
+Best,
+NIBRAS AHMED
++251 953 536 342
+Finfinnee, Ethiopia 🇪🇹`;
+      } else if (templateType === 'case-study') {
+        text = `Subject: How [EXAMPLE_CREATOR] increased engagement by 247% 📈
+
+Hi [NAME],
+
+Quick case study:
+
+One of our creators went from:
+❌ 2 hours/day on content creation
+❌ 2.3% engagement rate
+❌ $0 from monetization
+
+To:
+✅ 20 minutes/day with AI
+✅ 5.7% engagement (148% increase!)
+✅ $1,200/month from sponsorships
+
+How? Our AI generates:
+→ Monetization strategies
+→ Affiliate suggestions
+→ Sponsor pitch emails
+
+Ready to try? [YOUR_LINK]
+
+Cheers,
+NIBRAS`;
+      } else if (templateType === 'special-offer') {
+        text = `Subject: 50% off for the next 48 hours ⏰
+
+Hi [NAME],
+
+This offer expires in 48 hours:
+
+Pro Plan: $99/month → $49.50/month
+(First 3 months, then regular price)
+
+What you get:
+✅ Unlimited content generation
+✅ Monetization strategies
+✅ Affiliate program matching
+✅ Sponsor pitch emails
+✅ Priority email support
+
+Use code: ETHIOPIA50
+
+Offer valid until: [DATE/TIME]
+[YOUR_LINK]
+
+Don't miss this,
+NIBRAS AHMED
++251 953 536 342`;
+      }
+
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Email copied! Paste into your email client 📧');
+      });
+    }
+
+    // Update lead stats
+    function updateLeadStats() {
+      const totalLeads = dataList.filter(item => item.lead_name).length;
+      const emailReady = totalLeads; // All leads are ready to email
+      const estimatedRevenue = totalLeads * 0.03 * 99; // 3% conversion at $99/month
+
+      document.getElementById('total-leads').textContent = totalLeads;
+      document.getElementById('email-ready').textContent = emailReady;
+      document.getElementById('conversion-potential').textContent = `$${estimatedRevenue.toFixed(0)}`;
+    }
+
+    // Render lead table
+    function renderLeadTable() {
+      const leads = dataList.filter(item => item.lead_name);
+      const tbody = document.getElementById('leads-tbody');
+
+      if (leads.length === 0) {
+        tbody.innerHTML = '<tr class="hover:bg-white/5"><td colspan="7" class="px-4 py-8 text-center text-white/40">No leads captured yet. Start in the Lead Capture tab! 👆</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = leads.slice().reverse().map(lead => `
+        <tr class="hover:bg-white/5">
+          <td class="px-4 py-3 text-white/90">${lead.lead_name}</td>
+          <td class="px-4 py-3 text-white/70 text-xs"><a href="mailto:${lead.lead_email}" class="text-blue-300 hover:underline">${lead.lead_email}</a></td>
+          <td class="px-4 py-3 text-white/70">${lead.lead_type}</td>
+          <td class="px-4 py-3 text-white/70">${lead.lead_source}</td>
+          <td class="px-4 py-3">
+            <select class="px-2 py-1 bg-white/10 border border-white/20 rounded text-white text-xs" onchange="updateLeadStatus('${lead.__backendId}', this.value)">
+              <option value="new" ${lead.lead_status === 'new' ? 'selected' : ''}>New</option>
+              <option value="emailed" ${lead.lead_status === 'emailed' ? 'selected' : ''}>Emailed</option>
+              <option value="interested" ${lead.lead_status === 'interested' ? 'selected' : ''}>Interested</option>
+              <option value="trial" ${lead.lead_status === 'trial' ? 'selected' : ''}>Trial</option>
+              <option value="customer" ${lead.lead_status === 'customer' ? 'selected' : ''}>Customer</option>
+            </select>
+          </td>
+          <td class="px-4 py-3 text-white/60 text-xs">${new Date(lead.createdAt).toLocaleDateString()}</td>
+          <td class="px-4 py-3 text-center">
+            <button class="text-xs text-red-400 hover:text-red-300" onclick="deleteLead('${lead.__backendId}')">
+              <i data-lucide="trash-2" class="w-4 h-4 inline"></i>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+
+      lucide.createIcons();
+    }
+
+    // Update lead status
+    async function updateLeadStatus(leadId, newStatus) {
+      const lead = dataList.find(item => item.__backendId === leadId);
+      if (!lead) return;
+
+      lead.lead_status = newStatus;
+      const result = await window.dataSdk.update(lead);
+      if (result.isOk) {
+        showToast(`Lead status updated to "${newStatus}" ✅`);
+      }
+    }
+
+    // Delete lead
+    async function deleteLead(leadId) {
+      const lead = dataList.find(item => item.__backendId === leadId);
+      if (!lead) return;
+
+      if (confirm('Are you sure you want to delete this lead?')) {
+        const result = await window.dataSdk.delete(lead);
+        if (result.isOk) {
+          showToast('Lead deleted ❌');
+        }
+      }
+    }
+
+    // Export leads to CSV
+    document.getElementById('export-leads-btn')?.addEventListener('click', () => {
+      const leads = dataList.filter(item => item.lead_name);
+      if (leads.length === 0) {
+        showToast('No leads to export');
+        return;
+      }
+
+      let csv = 'Name,Email,Phone,Type,Source,Status,Date\n';
+      leads.forEach(lead => {
+        csv += `"${lead.lead_name}","${lead.lead_email}","${lead.lead_phone}","${lead.lead_type}","${lead.lead_source}","${lead.lead_status}","${new Date(lead.createdAt).toLocaleDateString()}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `leads-${Date.now()}.csv`;
+      a.click();
+      showToast('Leads exported to CSV! 📊');
+    });
+
+    // Refresh leads
+    document.getElementById('refresh-leads-btn')?.addEventListener('click', () => {
+      renderLeadTable();
+      updateLeadStats();
+      showToast('Leads refreshed ✅');
+    });
+
+    // Override original data handler to include lead management
+    const originalDataHandler = dataHandler;
+    dataHandler.onDataChanged = function(data) {
+      dataList = data || [];
+      renderHistory();
+      renderLeadTable();
+      updateLeadStats();
+    };
+
+    // Re-initialize with updated handler
+    window.dataSdk.init(dataHandler);
+
+    // ========== PAYMENT & SUBSCRIPTION FUNCTIONS ==========
+
+    // Open pricing modal
+    function openPricingModal() {
+      document.getElementById('pricing-modal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    // Close pricing modal
+    function closePricingModal() {
+      document.getElementById('pricing-modal').classList.add('hidden');
+    }
+
+    // Handle Stripe checkout
+    document.getElementById('stripe-checkout-btn')?.addEventListener('click', async () => {
+      if (!stripe) {
+        showToast('⚠️ Stripe not configured. Contact support.');
+        return;
+      }
+
+      if (!currentUser) {
+        showToast('Please login first');
+        document.getElementById('auth-modal').classList.remove('hidden');
+        return;
+      }
+
+      try {
+        const button = document.getElementById('stripe-checkout-btn');
+        button.disabled = true;
+        button.innerHTML = '<i data-lucide="loader" class="w-4 h-4 animate-spin inline mr-2"></i> Processing...';
+
+        // Call backend to create checkout session
+        const response = await fetch(`${currentBackendUrl}/api/create-checkout-session`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: currentUser.email,
+            userId: currentUser.email, // Use email as unique identifier
+            priceAmount: parseInt((config.pro_price || '9.99') * 100) // Convert to cents
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to create checkout session');
+        }
+
+        const { sessionId } = await response.json();
+
+        // Redirect to Stripe Checkout
+        const { error } = await stripe.redirectToCheckout({ sessionId });
+
+        if (error) {
+          showToast('❌ ' + error.message);
+        }
+      } catch (error) {
+        console.error('Checkout error:', error);
+        showToast('❌ Payment setup failed. Try again.');
+      } finally {
+        const button = document.getElementById('stripe-checkout-btn');
+        button.disabled = false;
+        button.innerHTML = '<i data-lucide="credit-card" class="w-4 h-4"></i> Subscribe with Stripe';
+        lucide.createIcons();
+      }
+    });
+
+    // Close payment success modal
+    function closePaymentSuccessModal() {
+      document.getElementById('payment-success-modal').classList.add('hidden');
+      closePricingModal();
+      
+      // Activate Pro
+      isProUser = true;
+      usageCount = 0;
+      localStorage.setItem('is_pro_user', 'true');
+      localStorage.setItem('usage_count', '0');
+      updateUIAfterLogin();
+      
+      showToast('🎉 Welcome to Pro! Unlimited content generation unlocked.');
+    }
+
+    // Open subscription dashboard
+    function openSubscriptionDashboard() {
+      document.getElementById('subscription-dashboard-modal').classList.remove('hidden');
+      
+      // Update subscription details
+      const planDisplay = document.getElementById('subscription-plan-display');
+      const usageDisplay = document.getElementById('subscription-usage-display');
+      const billingDisplay = document.getElementById('subscription-billing-display');
+      const freeLimit = parseInt(config.free_limit || '10');
+      
+      if (isProUser) {
+        planDisplay.textContent = 'Pro';
+        planDisplay.className = 'text-2xl font-800 text-green-300 mt-2';
+        usageDisplay.textContent = '∞ Unlimited';
+        billingDisplay.textContent = '$' + (config.pro_price || '9.99') + '/month';
+        document.getElementById('manage-subscription-btn').classList.remove('hidden');
+        document.getElementById('cancel-subscription-btn').classList.remove('hidden');
+      } else {
+        planDisplay.textContent = 'Free';
+        usageDisplay.textContent = usageCount + '/' + freeLimit;
+        billingDisplay.textContent = 'Never';
+      }
+      
+      lucide.createIcons();
+    }
+
+    // Close subscription dashboard
+    function closeSubscriptionDashboard() {
+      document.getElementById('subscription-dashboard-modal').classList.add('hidden');
+    }
+
+    // Cancel subscription
+    document.getElementById('cancel-subscription-btn')?.addEventListener('click', async () => {
+      if (confirm('Are you sure? You\'ll lose Pro access.')) {
+        try {
+          // Call backend to cancel subscription
+          const response = await fetch(`${currentBackendUrl}/api/cancel-subscription`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: currentUser.email
+            })
+          });
+
+          if (response.ok) {
+            isProUser = false;
+            usageCount = 0;
+            localStorage.setItem('is_pro_user', 'false');
+            localStorage.setItem('usage_count', '0');
+            updateUIAfterLogin();
+            closeSubscriptionDashboard();
+            showToast('Subscription cancelled. You\'re back on Free plan.');
+          } else {
+            showToast('❌ Failed to cancel subscription');
+          }
+        } catch (error) {
+          console.error('Cancel error:', error);
+          showToast('❌ Error cancelling subscription');
+        }
+      }
+    });
+
+    // Check payment status on page load
+    window.addEventListener('load', () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('session_id')) {
+        document.getElementById('payment-success-modal').classList.remove('hidden');
+      }
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9e307ad961a38a64',t:'MTc3NDYzNjM3MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
